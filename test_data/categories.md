@@ -1,0 +1,70 @@
+---
+- 運動:
+  - 規律運動 / regular
+  - 直線運動
+  - 旋轉rotating
+  - 閃爍/flash
+  - others        
+- user behavior:
+  - 專注/focus
+  - 眼睛動作/eye movement/shake
+  - 重新排序/reorder
+  - 眼角餘光/peripheral
+- color:
+  - 顏色對比:
+    - 亮度對比
+    - 彩度對比
+    - 飽和度對比
+  - 顏色漸層
+  - 顏色變化/隨時間變色
+  - 重複出現的圖形/pattern
+  - 顏色限制:
+    - 低飽和
+    - 亮度相同
+    - 特定顏色
+  - others
+- 有比較對象:
+  - 邊緣跟中心/peripheral and center
+  - 平行
+  - 相似物體
+  - 自己
+  - others
+- lighting:
+  - 影/shadow
+  - 光源方向/light source direction
+- geometry:
+  - 重複出現的圖形/pattern:
+    - 條紋/柵欄/stripe
+    - 方格/grid
+    - 輻射/radial/spoke
+    - 圓點/dot
+    - others
+  - 多邊形
+  - 圓形/circle
+  - 直線
+  - 曲線
+  - 破碎/incomplete
+  - 垂直/perpendicular
+  - 比例/scaling
+    
+
+
+- 遊戲內機制/ Game Feature:
+  - 濾鏡/filter:
+    - 模糊/blur
+    - 馬賽克 
+  - 遮擋物/obstacle / occulder
+  - 噪音/noise
+  - 特殊鏡頭角度/special camera angle / point of view
+  - 圖層/layers
+  - 輪流
+  - 出現/appear
+  - 消失/disappear
+  - 文字/text
+  - 臉/face
+  - 3D
+  - duality / 一體兩面
+  - 2D
+  - 輪廓/contour
+  - 多個物體/group / multiple object
+---

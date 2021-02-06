@@ -1,4 +1,6 @@
 const IllusionModel = require('./models/illusion');
+const CategoryModel = require('./models/category');
+
 
 module.exports = {
   searchByTags: async (paramsObj) => {
@@ -16,18 +18,17 @@ module.exports = {
     }
   },
   insertNewEntry: async (ctx, next) => {
-    const illusion = new IllusionModel();
+    const illusion = new IllusionModel.model();
     const unsplitedTags = ctx.params[0].split('/');
     const name = unsplitedTags[unsplitedTags.length - 1];
     unsplitedTags.pop();
 
     const tagTree = unsplitedTags.map((level) => level.split('&'));
     tagTree.slice(0, tagTree.length-2);
-
     illusion.name = name;
-    illusion.tags = tagTree;
     illusion.content = ctx.request.body;
 
-    return await illusion.save();
+    await illusion.save();
+    await illusion.attachCategories(tagTree);
   },
 };
