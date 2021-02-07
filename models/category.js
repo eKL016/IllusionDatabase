@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 
 const categorySchema = new mongoose.Schema({
   name: String,
-  subcategory: [mongoose.ObjectId],
+  level: Number,
+  subcategories: [mongoose.ObjectId],
 });
 
 module.exports = {

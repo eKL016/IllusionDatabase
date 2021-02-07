@@ -5,19 +5,25 @@ const router = new Router();
 
 router
     .get('/', async (ctx, next) => {
-      ctx.body = 'INDEX';
+      return ctx.body = 'INDEX';
     })
-    .get('/(.*)', async (ctx, next) => {
-      const resultIndices = await queryFunctions
-          .searchByTags(ctx.params[0].split('/'));
+    .get('/categories', async (ctx, next) => {
+      return ctx.body = await queryFunctions
+          .getAllTags(ctx, next);
     })
-    .post('/(.*)', async (ctx, next) => {
-      try {
-        await queryFunctions.insertNewEntry(ctx, next);
-        return ctx.body = 'Done';
-      } catch (err) {
-        console.log(err);
-      }
+    .get('/categories/(.*)', async (ctx, next) => {
+      return ctx.body = await queryFunctions
+          .searchByTags(ctx, next);
+    })
+    .get('/illusions', async (ctx, next) =>
+      ctx.body = await queryFunctions.getAllEntry(ctx, next),
+    )
+    .get('/illusions/:id', async (ctx, next) =>
+      ctx.body = await queryFunctions.getEntryById(ctx, next),
+    )
+    .post('/illusions/(.*)', async (ctx, next) => {
+      await queryFunctions.insertNewEntry(ctx, next);
+      return ctx.body = 'Done';
     });
 
 

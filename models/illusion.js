@@ -20,6 +20,7 @@ illusionSchema.methods.attachCategories = async function(tagTree) {
     const foundCategories = await Promise.all(tags.map( async (tag) => {
       const foundCategory = await categorySchema.model
           .findOne({name: tag}, '_id').exec();
+      if (!foundCategory) throw new ReferenceError(`Invalid Tag "${tag}"`);
       return foundCategory._id;
     }));
     console.log(foundCategories);

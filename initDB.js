@@ -2,20 +2,18 @@ const mongoose = require('mongoose');
 const Category = require('./models/category.js').model;
 const fs = require('fs').promises;
 
-const recursiveAddCatagories = async (cat) => {
+const recursiveAddCatagories = async (cat, level=0) => {
   const selfName = Object.keys(cat)[0];
   const child = cat[selfName];
-  const newCategory = new Category();
+  const newCategory = new Category({level: level});
   if (typeof child === 'object') {
     newCategory.name = selfName;
-    console.log(child);
-    newCategory.subcategory = await Promise
+    newCategory.subcategories = await Promise
         .all(
             child
-                .map((key) => recursiveAddCatagories(key)),
+                .map((key) => recursiveAddCatagories(key, level+1)),
         );
   } else {
-    console.log(cat);
     newCategory.name = cat;
   }
   await newCategory.save();
@@ -32,9 +30,10 @@ db.once('open', async function() {
   try {
     await Promise.all(
         categoryObj.categories
-            .map((cat) => recursiveAddCatagories(cat)),
+            .map((cat) => recursiveAddCatagories(cat, 0)),
     );
     console.log('I\'ve planted a tree in your DB :P');
+    process.exit(0);
   } catch (e) {
     console.log(e);
   };
