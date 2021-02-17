@@ -57,16 +57,21 @@ module.exports = {
   },
   insertNewEntry: async (ctx, next) => {
     const illusion = new IllusionModel.model();
-    const unsplitedTags = ctx.params[0].split('/');
-    const name = unsplitedTags[unsplitedTags.length - 1];
-    unsplitedTags.pop();
+    const {
+      content: mdContent,
+      categories: unsplitedCategoryArray,
+      effects: unsplitedEffectArray,
+    } = ctx.request.body;
+    const attrArrays = {
+      categoriesArray: unsplitedCategoryArray.map((line) => line.split('&')),
+      effectsArray: unsplitedEffectArray.map((line) => line.split('&')),
+    };
+    console.log(attrArrays);
+    illusion.name = ctx.params.name;
+    illusion.content = mdContent;
 
-    const tagTree = unsplitedTags.map((level) => level.split('&'));
-    tagTree.slice(0, tagTree.length-2);
-    illusion.name = name;
-    illusion.content = ctx.request.body;
 
-    await illusion.attachCategories(tagTree);
+    await illusion.assignAttributes(attrArrays);
     await illusion.save();
   },
 };

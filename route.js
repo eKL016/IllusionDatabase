@@ -21,7 +21,7 @@ router
     .get('/illusions/:id', async (ctx, next) =>
       ctx.body = await queryFunctions.getEntryById(ctx, next),
     )
-    .post('/illusions/(.*)', async (ctx, next) => {
+    .post('/illusions/:name', async (ctx, next) => {
       await queryFunctions.insertNewEntry(ctx, next);
       return ctx.body = 'Done';
     });

@@ -5,13 +5,14 @@
         "規律運動$regular",
         "直線運動",
         "旋轉rotating",
-        "閃爍$flash"
+        "閃爍$flash",
+        "others"
       ]
     },
     {
-      "user behavior": [
+      "user_behavior": [
         "專注$focus",
-        "眼睛動作$eye movement$shake",
+        "眼睛動作$eye_movement$shake",
         "重新排序$reorder",
         "眼角餘光$peripheral"
       ]
@@ -34,21 +35,23 @@
             "亮度相同",
             "特定顏色"
           ]
-        }
+        },
+        "others"
       ]
     },
     {
       "有比較對象": [
-        "邊緣跟中心$peripheral and center",
+        "邊緣跟中心$peripheral_and_center",
         "平行",
         "相似物體",
-        "自己"
+        "自己",
+        "others"
       ]
     },
     {
       "lighting": [
         "影$shadow",
-        "光源方向$light source direction"
+        "光源方向$light_source_direction"
       ]
     },
     {
@@ -58,7 +61,8 @@
             "條紋$柵欄$stripe",
             "方格$grid",
             "輻射$radial$spoke",
-            "圓點$dot"
+            "圓點$dot",
+            "others"
           ]
         },
         "多邊形",
@@ -71,7 +75,7 @@
       ]
     },
     {
-      "遊戲內機制$Game Feature": [
+      "遊戲內機制$Game_Feature": [
         {
           "濾鏡$filter": [
             "模糊$blur",
@@ -80,7 +84,7 @@
         },
         "遮擋物$obstacle$occulder",
         "噪音$noise",
-        "特殊鏡頭角度$special camera angle$point of view",
+        "特殊鏡頭角度$special_camera_angle$point_of_view",
         "圖層$layers",
         "輪流",
         "出現$appear",
@@ -91,7 +95,7 @@
         "duality$一體兩面",
         "2D",
         "輪廓$contour",
-        "多個物體$group$multiple object"
+        "多個物體$group$multiple_object"
       ]
     }
   ]
