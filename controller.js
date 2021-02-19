@@ -1,50 +1,67 @@
 const IllusionModel = require('./models/illusion');
-const CategoryModel = require('./models/category');
-
+const TagModels = {
+  categories: require('./models/category'),
+  effects: require('./models/effect'),
+};
+const AllowedTagType = ['categories', 'effects'];
 
 module.exports = {
-  // Category Controllers
+  // Controllers
   getAllTags:
     async (ctx, next) => {
+      const type = ctx.params.type;
+      if (AllowedTagType.find((x) => x === type) === undefined) {
+        throw new EvalError('Invalid Tag Type');
+      }
       if (ctx.query.populate === 'true') {
-        return await CategoryModel.model
-            .find({}, 'name _id subcategories')
+        const subTagName = `sub${type}`;
+        const selectedColumns = `name _id ${subTagName}`;
+
+        return await TagModels[type].model
+            .find({}, selectedColumns)
             .populate({
-              path: 'subcategories',
+              path: subTagName,
               populate: {
-                path: 'subcategories',
-                select: 'name _id subcategories',
+                path: subTagName,
+                select: selectedColumns,
               },
-              select: 'name _id subcategories',
+              select: selectedColumns,
             })
             .exec();
       } else {
-        return await CategoryModel.model.find({}, 'name _id').exec();
+        return await TagModels[type].model.find({}, 'name _id').exec();
       }
     },
   searchByTags: async (ctx, next) => {
-    const tagTree = ctx.params[0]
-        .split('/')
-        .map((level) => level.split('&'));
-    const flattenedTagTree = tagTree.reduce((acc, val) => acc.concat(val), []);
-    const populatedTagTree = await CategoryModel.model
-        .find({name: {$in: flattenedTagTree}}).exec();
-    const tagMap = populatedTagTree
+    const type = ctx.params.type;
+    if (AllowedTagType.find((x) => x === type) === undefined) {
+      throw new EvalError('Invalid Tag Type');
+    }
+    const {
+      tags: unsplitedTagArray,
+    } = ctx.request.body;
+    const splitedTagArray = unsplitedTagArray.map((row) => row.split('&'));
+    const flattenedTagArray = splitedTagArray
+        .reduce((acc, val) => acc.concat(val), []);
+    const populatedTagArray = await TagModels[type].model
+        .find({name: {$in: flattenedTagArray}}).exec();
+
+    const tagMap = populatedTagArray
         .reduce((out, cur) => ({...out, [cur.name]: cur}), {});
     let targetTags = [];
 
-    while (tagTree.length > 0) {
-      const tags = tagTree[0];
+    while (splitedTagArray.length > 0) {
+      const tags = splitedTagArray[0];
       if (tags[tags.length-1] === '') {
         tags.pop();
       }
       if (tags.length > 0) {
         targetTags = targetTags.concat(tags.map((tagName) => tagMap[tagName]));
       }
-      tagTree.shift();
+      splitedTagArray.shift();
     }
     const query = IllusionModel.model
-        .find({categories: {$all: targetTags}});
+        .find({[type]: {$all: targetTags}});
     const output = await query.exec();
     return Object.keys(output).map((key) => output[key]._id);
   },

@@ -7,14 +7,11 @@ router
     .get('/', async (ctx, next) => {
       return ctx.body = 'INDEX';
     })
-    .get('/categories', async (ctx, next) => {
+    .get('/tags/:type', async (ctx, next) => {
       return ctx.body = await queryFunctions
           .getAllTags(ctx, next);
     })
-    .get('/categories/(.*)', async (ctx, next) => {
-      return ctx.body = await queryFunctions
-          .searchByTags(ctx, next);
-    })
+
     .get('/illusions', async (ctx, next) =>
       ctx.body = await queryFunctions.getAllEntry(ctx, next),
     )
@@ -24,7 +21,10 @@ router
     .post('/illusions/:name', async (ctx, next) => {
       await queryFunctions.insertNewEntry(ctx, next);
       return ctx.body = 'Done';
+    })
+    .post('/illusions/search/:type', async (ctx, next) => {
+      return ctx.body = await queryFunctions
+          .searchByTags(ctx, next);
     });
-
 
 module.exports = router;

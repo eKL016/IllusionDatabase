@@ -12,7 +12,7 @@
         - 亮度
         - 彩度
 - 幾何$geometry:
-    - 變化 $ variation:
+    - 變化$variation:
         - 直線$stright line
         - 角度$angle
         - 大小$size
