@@ -57,9 +57,12 @@ module.exports = {
         .find({[type]: {$all: targetTags}}).exec();
     return Object.keys(output).map((key) => output[key]._id);
   },
-  // Illusion Controllers
   getAllEntry: async (ctx, next) => {
-    return IllusionModel.model.find().exec();
+    if (ctx.query.extend === 'true') {
+      return await IllusionModel.model.find().exec();
+    } else {
+      return await IllusionModel.model.find({}, '_id title').exec();
+    }
   },
   getEntryById: async (ctx, next) => {
     return IllusionModel.model.findOne({_id: ctx.params.id}).exec();
@@ -81,7 +84,7 @@ module.exports = {
     illusion.name = ctx.params.name;
     illusion.content = mdContent;
     illusion.title = title;
-    
+
     await illusion.assignAttributes(attrArrays);
   },
 };
