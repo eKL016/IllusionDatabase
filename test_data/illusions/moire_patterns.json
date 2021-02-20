@@ -1,0 +1,14 @@
+{
+  "title": "Moire Patterns",
+  "categories": [
+    "602d0e92771e4402dd6854d2&602d0e92771e4402dd6854d8&602d0e92771e4402dd6854ea&602d0e92771e4402dd6854f3&602d0e92771e4402dd685501",
+    "602d0e92771e4402dd6854fe&602d0e92771e4402dd6854db&602d0e92771e4402dd6854f4&602d0e92771e4402dd685505&602d0e92771e4402dd685508"
+  ],
+  "effects": [
+    "602d0e92771e4402dd68551f",
+    "602d0e92771e4402dd68552c",
+    "602d0e92771e4402dd685534"
+  ],
+  "content": "## What to see\nIn the adjacent animation you see two pairs of concentric ring arrays. The blue one moves a little, and the superposition of the blue rings with the green background rings creates curved dark bands. These are known as “moirés” (French).\n## What to do\nYou can click on the rings and move the top array around. The slider changes the transparency of the top ring array. The colour patches left of the slider opens a colour choice panel.\n## Comments\nThe two patterns are superimposed, so light has to pass both patters (or be blocked, as the case may be). This involves a multiplication of the two transmittance values, and multiplication of patterns with similar spatial frequencies causes difference frequencies to appear. Well, perhaps the excellent Wikipedia article on this explains it better. At any rate, the interference patterns can be very pleasing to the eye. Here I made the horizontal and vertical motion subtly different so that it takes very long until the full sequence repeats. There are many interesting things to do with moirés; this just scratches the surface. Next I present moirées arising from rotation."
+}
+

@@ -4,23 +4,26 @@ const schemas = {
   effects: require('./effect.js'),
 };
 
-const traverseAttrArray = async (illusionInstance, attrName, attrArray) => {
+const cheakAttrExists = async (illusionInstance, attrName, attrArray) => {
   for (let i=0; i<attrArray.length; i++) {
     const attrs = attrArray[i];
     console.log(`Attach ${attrName}: ${attrs}`);
-    const foundAttrs = await Promise.all(attrs.map( async (a) => {
+    const foundAttrs = await Promise.all(attrs.map( async (id) => {
       const foundAttr = await schemas[attrName].model
-          .findOne({name: a}, '_id').exec();
-      if (!foundAttr) throw new ReferenceError(`Invalid ${attrName}: "${a}"`);
+          .findOne({_id: id}, '_id').exec();
+      if (!foundAttr) {
+        throw new ReferenceError(`Invalid ${attrName} ID: "${a}"`);
+      }
       return foundAttr._id;
     }));
     console.log(foundAttrs);
-    illusionInstance[attrName] = illusionInstance[attrName].concat(foundAttrs);
+    return;
   }
 };
 
 const illusionSchema = new mongoose.Schema({
   name: String,
+  title: String,
   content: String,
   update_at: {type: Date, default: Date.now},
   categories: [mongoose.ObjectId],
@@ -35,13 +38,13 @@ illusionSchema.methods.getContentBlob = function() {
 illusionSchema.methods.assignAttributes = async function(
     {categoriesArray, effectsArray},
 ) {
-  try {
-    await traverseAttrArray(this, 'categories', categoriesArray);
-    await traverseAttrArray(this, 'effects', effectsArray);
-    return this.save();
-  } catch (e) {
-    console.log(e);
-  };
+  await Promise.all([
+    cheakAttrExists(this, 'categories', categoriesArray),
+    cheakAttrExists(this, 'effects', effectsArray),
+  ]);
+  this.categories = categoriesArray.reduce((acc, cur) => acc.concat(cur), []);
+  this.effects = effectsArray.reduce((acc, cur) => acc.concat(cur), []);
+  return this.save();
 };
 
 module.exports = {

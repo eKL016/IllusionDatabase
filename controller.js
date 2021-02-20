@@ -32,7 +32,7 @@ module.exports = {
         return await TagModels[type].model.find({}, 'name _id').exec();
       }
     },
-  searchByTags: async (ctx, next) => {
+  searchByTagIDs: async (ctx, next) => {
     const type = ctx.params.type;
     if (AllowedTagType.find((x) => x === type) === undefined) {
       throw new EvalError('Invalid Tag Type');
@@ -41,14 +41,7 @@ module.exports = {
       tags: unsplitedTagArray,
     } = ctx.request.body;
     const splitedTagArray = unsplitedTagArray.map((row) => row.split('&'));
-    const flattenedTagArray = splitedTagArray
-        .reduce((acc, val) => acc.concat(val), []);
-    const populatedTagArray = await TagModels[type].model
-        .find({name: {$in: flattenedTagArray}}).exec();
-
-    const tagMap = populatedTagArray
-        .reduce((out, cur) => ({...out, [cur.name]: cur}), {});
-    let targetTags = [];
+    const targetTags = [];
 
     while (splitedTagArray.length > 0) {
       const tags = splitedTagArray[0];
@@ -56,13 +49,12 @@ module.exports = {
         tags.pop();
       }
       if (tags.length > 0) {
-        targetTags = targetTags.concat(tags.map((tagName) => tagMap[tagName]));
+        targetTags.push(...tags);
       }
       splitedTagArray.shift();
     }
-    const query = IllusionModel.model
-        .find({[type]: {$all: targetTags}});
-    const output = await query.exec();
+    const output = await IllusionModel.model
+        .find({[type]: {$all: targetTags}}).exec();
     return Object.keys(output).map((key) => output[key]._id);
   },
   // Illusion Controllers
@@ -76,6 +68,7 @@ module.exports = {
     const illusion = new IllusionModel.model();
     const {
       content: mdContent,
+      title: title,
       categories: unsplitedCategoryArray,
       effects: unsplitedEffectArray,
     } = ctx.request.body;
@@ -84,11 +77,11 @@ module.exports = {
       effectsArray: unsplitedEffectArray.map((line) => line.split('&')),
     };
     console.log(attrArrays);
+
     illusion.name = ctx.params.name;
     illusion.content = mdContent;
-
-
+    illusion.title = title;
+    
     await illusion.assignAttributes(attrArrays);
-    await illusion.save();
   },
 };

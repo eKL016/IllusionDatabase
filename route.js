@@ -24,7 +24,7 @@ router
     })
     .post('/illusions/search/:type', async (ctx, next) => {
       return ctx.body = await queryFunctions
-          .searchByTags(ctx, next);
+          .searchByTagIDs(ctx, next);
     });
 
 module.exports = router;
