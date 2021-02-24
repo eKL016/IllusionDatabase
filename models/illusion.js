@@ -26,8 +26,8 @@ const illusionSchema = new mongoose.Schema({
   title: String,
   content: String,
   update_at: {type: Date, default: Date.now},
-  categories: [mongoose.ObjectId],
-  effects: [mongoose.ObjectId],
+  categories: [{type: mongoose.ObjectId, ref: 'Category'}],
+  effects: [{type: mongoose.ObjectId, ref: 'Effect'}],
 });
 illusionSchema.methods.getContentString = function() {
   return this.content.toString('utf8');

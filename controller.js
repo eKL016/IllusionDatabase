@@ -65,7 +65,11 @@ module.exports = {
     }
   },
   getEntryById: async (ctx, next) => {
-    return IllusionModel.model.findOne({_id: ctx.params.id}).exec();
+    return IllusionModel.model
+        .findOne({_id: ctx.params.id})
+        .populate('effects', 'name _id')
+        .populate('categories', 'name _id')
+        .exec();
   },
   insertNewEntry: async (ctx, next) => {
     const illusion = new IllusionModel.model();
