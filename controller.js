@@ -147,7 +147,7 @@ module.exports = {
       const effectFinder = getTagIDFinder('effects', allEffects);
       const elementFinder = getTagIDFinder('elements', allElements);
 
-      newIllusion.title = entry.name;
+      newIllusion.title = entry.title;
       newIllusion.gifFileName = entry['GIF檔名'];
       newIllusion.refURL = entry['URLs'];
       try {
