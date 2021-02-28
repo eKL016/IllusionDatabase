@@ -1,0 +1,97 @@
+{
+  "elements": [
+    {
+      "Motion": [
+        "Motion/Periodic",
+        "Motion/Linear",
+        "Motion/Rotation",
+        "Motion/Flickering",
+        "Motion/Others"
+      ]
+    },
+    {
+      "Gaze": [
+        "Gaze/Focus",
+        "Gaze/Saccade",
+        "Gaze/Peripheral"
+      ]
+    },
+    {
+      "Color": [
+        {
+          "Color/High contrast": [
+            "Color/High contrast/Brightness",
+            "Color/High contrast/Hue",
+            "Color/High contrast/Others"
+          ]
+        },
+        "Color/Gradient",
+        "Color/Chromatic transition",
+        "Color/Others"
+      ]
+    },
+    {
+      "Relation": [
+        "Relation/Periphery and center",
+        "Relation/Parallel",
+        "Relation/Perpendicular",
+        "Relation/Similar",
+        "Relation/Identical",
+        "Relation/Duality & Multiple explanation",
+        "Relation/Others"
+      ]
+    },
+    {
+      "Lighting": [
+        "Lighting/Shadow",
+        "Lighting/Source",
+        "Lighting/Others"
+      ]
+    },
+    {
+      "Pattern": [
+        "Pattern/Stripe",
+        "Pattern/Grid",
+        "Pattern/Radial",
+        "Pattern/Dot",
+        "Pattern/Others"
+      ]
+    },
+    {
+      "Shape": [
+        "Shape/Straight line & Rectangle",
+        "Shape/Curve",
+        "Shape/Circle",
+        "Shape/Polygon",
+        "Shape/Incompletion",
+        "Shape/Scale",
+        "Shape/Others"
+      ]
+    },
+    {
+      "Filter": [
+        "Filter/Blur",
+        "Filter/Mosaic",
+        "Filter/Noise",
+        "Filter/Others"
+      ]
+    },
+    {
+      "Perspective & Anamorphosis": [
+        "Perspective & Anamorphosis/Specific point of view",
+        "Perspective & Anamorphosis/2D and 3D"
+      ]
+    },
+    {
+      "Action": [
+        "Action/Round robin",
+        "Action/Reorder"
+      ]
+    },
+    "Layers",
+    "Obstacle & Occluder",
+    "Text",
+    "Face",
+    "Mirror"
+  ]
+}

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const schemas = {
-  categories: require('./category.js'),
+  elements: require('./element.js'),
   effects: require('./effect.js'),
 };
 
@@ -22,11 +22,12 @@ const cheakAttrExists = async (illusionInstance, attrName, attrArray) => {
 };
 
 const illusionSchema = new mongoose.Schema({
-  name: String,
   title: String,
-  content: String,
+  gifFileName: String,
+  refURL: String,
+  summary: String,
   update_at: {type: Date, default: Date.now},
-  categories: [{type: mongoose.ObjectId, ref: 'Category'}],
+  elements: [{type: mongoose.ObjectId, ref: 'Element'}],
   effects: [{type: mongoose.ObjectId, ref: 'Effect'}],
 });
 illusionSchema.methods.getContentString = function() {
@@ -36,13 +37,13 @@ illusionSchema.methods.getContentBlob = function() {
   return this.content;
 };
 illusionSchema.methods.assignAttributes = async function(
-    {categoriesArray, effectsArray},
+    {elementsArray, effectsArray},
 ) {
   await Promise.all([
-    cheakAttrExists(this, 'categories', categoriesArray),
+    cheakAttrExists(this, 'elements', elementsArray),
     cheakAttrExists(this, 'effects', effectsArray),
   ]);
-  this.categories = categoriesArray.reduce((acc, cur) => acc.concat(cur), []);
+  this.elements = elementsArray.reduce((acc, cur) => acc.concat(cur), []);
   this.effects = effectsArray.reduce((acc, cur) => acc.concat(cur), []);
   return this.save();
 };

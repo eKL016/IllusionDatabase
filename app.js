@@ -14,7 +14,7 @@ db.once('open', function() {
 });
 
 const app = new Koa();
-app.use(koaBody({multipart: true}));
+app.use(koaBody({multipart: true, includeUnparsed: true}));
 app.use(logger());
 app.use(async (ctx, next) => {
   try {

@@ -1,96 +1,69 @@
 {
   "effects": [
     {
-      "color": [
+      "Color/Variation": [
+        "Color/Variation/Brightness",
+        "Color/Variation/Hue",
+        "Color/Variation/Others",
+        "Color/Variation/Saturation"
+      ]
+    },
+    {
+      "Geometry": [
         {
-          "變化$variation": [
-            "亮度$brightness",
-            "彩度$hue"
+          "Geometry/Variation": [
+            "Geometry/Variation/Straight line & Rectangle",
+            "Geometry/Variation/Angle",
+            "Geometry/Variation/Size",
+            "Geometry/Variation/Embossing & Engraving",
+            "Geometry/Variation/Completeness",
+            "Geometry/Variation/Impossible object",
+            "Geometry/Variation/Shape"
           ]
         },
         {
-          "產生$production": [
-            "亮度$brightness",
-            "彩度$hue"
+          "Geometry/Appearing": [
+            "Geometry/Appearing/Shape",
+            "Geometry/Appearing/Straight line & Rectangle",
+            "Geometry/Appearing/Embossing & Engraving",
+            "Geometry/Appearing/Dot"
           ]
         },
-        "color_mixture",
-        "color_spreading",
         {
-          "消失": [
-            "亮度",
-            "彩度"
+          "Geometry/Disappearing": [
+            "Geometry/Disappearing/Shape",
+            "Geometry/Disappearing/Straight line & Rectangle",
+            "Geometry/Disappearing/Dot"
           ]
         }
       ]
     },
     {
-      "幾何$geometry": [
+      "Motion": [
         {
-          "變化$variation": [
-            "直線$stright line",
-            "角度$angle",
-            "大小$size",
-            "凹凸",
-            "模糊輪廓$blur contour",
-            "深度變化",
-            {
-              "形狀變化$shape變化": [
-                "完整$不連續變連續$completion$discrete_to_continuous",
-                "連續變不連續$continuous_to_discrete",
-                "不存在的物體$impossible_object",
-                "形狀A變形狀B$shape_A_to_shape_B"
-              ]
-            }
+          "Motion/Variation": [
+            "Motion/Variation/Translation",
+            "Motion/Variation/Rotation",
+            "Motion/Variation/Continuity",
+            "Motion/Variation/Synchrony",
+            "Motion/Variation/Stop"
           ]
         },
         {
-          "產生": [
-            "直線",
-            "凹凸",
-            "點",
-            "形狀$shape",
-            "群體$grouping"
-          ]
-        },
-        {
-          "消失": [
-            "形狀$shape",
-            "直線",
-            "點"
+          "Motion/Appearing": [
+            "Motion/Appearing/Translation",
+            "Motion/Appearing/Rotation",
+            "Motion/Appearing/Shake",
+            "Motion/Appearing/Grouping",
+            "Motion/Appearing/Others"
           ]
         }
       ]
     },
-    {
-      "motion": [
-        {
-          "變化": [
-            "平移$translation",
-            "旋轉$rotation",
-            "連續變不連續$continuous_to_discrete",
-            "同步變不同步$synchronous_to_asynchronous"
-          ]
-        },
-        {
-          "產生": [
-            "平移$translation",
-            "旋轉$rotation"
-          ]
-        },
-        "shake",
-        "stop$start",
-        "grouping"
-      ]
-    },
-    {
-      "遊戲效果": [
-        "數量變化",
-        "2D_to_3D",
-        "多種解釋$duality$multiple_explanation",
-        "恐怖",
-        "隱藏物體$disappear$hide_object"
-      ]
-    }
+    "Quantity variation",
+    "2D ↔ 3D",
+    "Duality & Multiple explanation",
+    "Horror",
+    "Hiding"
   ]
 }

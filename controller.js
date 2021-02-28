@@ -1,9 +1,61 @@
 const IllusionModel = require('./models/illusion');
+const _ = require('lodash');
+const parse = require('csv-parse/lib/sync');
 const TagModels = {
-  categories: require('./models/category'),
+  elements: require('./models/element'),
   effects: require('./models/effect'),
 };
-const AllowedTagType = ['categories', 'effects'];
+const AllowedTagType = ['elements', 'effects'];
+
+const getPopulatedTags = async (type='') => {
+  const subTagName = `sub${type}`;
+  const selectedColumns = `name _id ${subTagName} level`;
+
+  return await TagModels[type].model
+      .find({}, selectedColumns)
+      .populate({
+        path: subTagName,
+        populate: {
+          path: subTagName,
+          select: selectedColumns,
+        },
+        select: selectedColumns,
+      })
+      .exec();
+};
+const getTagIDFinder = (typeStr, allCandidateArray) => {
+  const subTagCol = `sub${typeStr}`;
+  const allCandidates = allCandidateArray;
+  return (unsplitedTagArray) => {
+    const splitedTagArray = unsplitedTagArray.split('|');
+    return _.uniq(splitedTagArray.map((splitedTag) => {
+      const result = [];
+      const levelTags = splitedTag.split('/');
+      let curNode = allCandidates.find(
+          (c)=> {
+            return c.name === levelTags[0];
+          },
+      );
+      for (let i=0; i<levelTags.length-1; i++) {
+        if (curNode[subTagCol] !== undefined && curNode[subTagCol].length>0) {
+          result.push(curNode._id);
+          const candidates = allCandidates.filter(
+              (c) => {
+                return curNode[subTagCol].map((x) =>x._id).includes(c._id);
+              },
+          );
+          curNode = candidates.find((c)=> c.name === levelTags[i+1]);
+        }
+      };
+      if (curNode==undefined) {
+        throw new Error(`A tag in ${splitedTag} not exists`);
+      } else {
+        result.push(curNode._id);
+      };
+      return result;
+    }).reduce((acc, cur)=>acc.concat(...cur), []));
+  };
+};
 
 module.exports = {
   // Controllers
@@ -14,20 +66,7 @@ module.exports = {
         throw new EvalError('Invalid Tag Type');
       }
       if (ctx.query.populate === 'true') {
-        const subTagName = `sub${type}`;
-        const selectedColumns = `name _id ${subTagName}`;
-
-        return await TagModels[type].model
-            .find({}, selectedColumns)
-            .populate({
-              path: subTagName,
-              populate: {
-                path: subTagName,
-                select: selectedColumns,
-              },
-              select: selectedColumns,
-            })
-            .exec();
+        return await getPopulatedTags(type);
       } else {
         return await TagModels[type].model.find({}, 'name _id').exec();
       }
@@ -68,27 +107,59 @@ module.exports = {
     return IllusionModel.model
         .findOne({_id: ctx.params.id})
         .populate('effects', 'name _id')
-        .populate('categories', 'name _id')
+        .populate('elements', 'name _id')
         .exec();
   },
   insertNewEntry: async (ctx, next) => {
     const illusion = new IllusionModel.model();
     const {
-      content: mdContent,
       title: title,
-      categories: unsplitedCategoryArray,
+      gifFileName: gifFileName,
+      refURL: refURL,
+      summary: summary,
+      content: content,
+      elements: unsplitedElementArray,
       effects: unsplitedEffectArray,
     } = ctx.request.body;
     const attrArrays = {
-      categoriesArray: unsplitedCategoryArray.map((line) => line.split('&')),
+      elementsArray: unsplitedElementArray.map((line) => line.split('&')),
       effectsArray: unsplitedEffectArray.map((line) => line.split('&')),
     };
     console.log(attrArrays);
 
-    illusion.name = ctx.params.name;
-    illusion.content = mdContent;
     illusion.title = title;
+    illusion.gifFileName = gifFileName;
+    illusion.refURL = refURL;
+    illusion.summary = summary;
+    illusion.content = content;
 
     await illusion.assignAttributes(attrArrays);
+  },
+  batchImport: async (ctx, next) => {
+    const entryArray = parse(ctx.request.body, {
+      delimiter: '\t',
+      columns: true,
+    });
+    const allElements = await getPopulatedTags('elements');
+    const allEffects = await getPopulatedTags('effects');
+    const results = entryArray.map((entry) => {
+      const newIllusion = {};
+      const effectFinder = getTagIDFinder('effects', allEffects);
+      const elementFinder = getTagIDFinder('elements', allElements);
+
+      newIllusion.title = entry.name;
+      newIllusion.gifFileName = entry['GIF檔名'];
+      newIllusion.refURL = entry['URLs'];
+      try {
+        newIllusion.effects = effectFinder(entry.effect);
+        newIllusion.elements = elementFinder(entry.element);
+        return newIllusion;
+      } catch (e) {
+        console.log(e);
+        delete newIllusion;
+        return {};
+      };
+    });
+    return await IllusionModel.model.insertMany(results);
   },
 };
