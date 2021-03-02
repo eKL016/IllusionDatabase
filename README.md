@@ -21,7 +21,7 @@ node app.js
     * [/illusions/:id](#GET-illusionsid)
     * [/tags/[elements|effects]?populate=[true|false]](#GET-tagselementseffectspopulatetruefalse)
 * POST
-    * [/illusions/search/\[elements|effects\]](#POST-illusionssearchelementsffects)
+    * [/illusions/search/\[elements|effects\]](#POST-illusionssearchelementseffects)
     * [/illusions/:name](#POST-illusionsname)
 ### GET /illusions?extend=\[true|false\]
 #### Request
@@ -180,7 +180,7 @@ Register a new illusion into database.
 
 ---
 
-### POST /illusions/search/\[elements|effects\]
+### POST /illusions/search/\[elements|effects\] (Work In Progress, DO NOT USE)
 #### Request
 ```
 Header:
