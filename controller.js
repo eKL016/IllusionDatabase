@@ -9,8 +9,7 @@ const AllowedTagType = ['elements', 'effects'];
 
 const getPopulatedTags = async (type='') => {
   const subTagName = `sub${type}`;
-  const selectedColumns = `name _id ${subTagName} level`;
-
+  const selectedColumns = `name _id ${subTagName} level iconURL`;
   return await TagModels[type].model
       .find({}, selectedColumns)
       .populate({
@@ -61,15 +60,17 @@ module.exports = {
   // Controllers
   getAllTags:
     async (ctx, next) => {
+      let res;
       const type = ctx.params.type;
       if (AllowedTagType.find((x) => x === type) === undefined) {
         throw new EvalError('Invalid Tag Type');
       }
       if (ctx.query.populate === 'true') {
-        return await getPopulatedTags(type);
+        res = await getPopulatedTags(type);
       } else {
-        return await TagModels[type].model.find({}, 'name _id').exec();
+        res = await TagModels[type].model.find({}, 'name _id iconURL').exec();
       }
+      return res;
     },
   searchByTagIDs: async (ctx, next) => {
     const type = ctx.params.type;
@@ -104,11 +105,13 @@ module.exports = {
     }
   },
   getEntryById: async (ctx, next) => {
-    return IllusionModel.model
+    const res = await IllusionModel.model
         .findOne({_id: ctx.params.id})
-        .populate('effects', 'name _id')
-        .populate('elements', 'name _id')
+        .populate('effects', 'name _id iconURL')
+        .populate('elements', 'name _id iconURL')
         .exec();
+    res.gifFileName = `/gifs/${res.gifFileName}`;
+    return res;
   },
   insertNewEntry: async (ctx, next) => {
     const illusion = new IllusionModel.model();

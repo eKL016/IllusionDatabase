@@ -23,10 +23,14 @@
       ]
     },
     {
-      "Color/Variation": [
-        "Color/Variation/Brightness",
-        "Color/Variation/Hue",
-        "Color/Variation/Others"
+      "Color": [
+        {
+          "Variation": [
+            "Color/Variation/Brightness",
+            "Color/Variation/Hue",
+            "Color/Variation/Others"
+          ]
+        }
       ]
     },
     {

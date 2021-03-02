@@ -7,12 +7,14 @@ npm install --global yarn
 # 2. Install dependencies
 yarn install
 
-# 3. Initialize a new database (name: test)
+# 3. Download and extract gifs/icons into ./statics/[gifs|icons]
+
+# 4. Initialize a new database (name: test)
 cd ./test_data
 node initDB.js
 python3 ./importIllusions.py
 
-# 4. Start app
+# 5. Start app
 node app.js
 ```
 ## Entrypoints
@@ -77,21 +79,36 @@ No need to send anything
 ```javascript=
 {
     "elements": [
-        "602d0e92771e4402dd6854d8",
-        "602d0e92771e4402dd6854dd",
-        "602d0e92771e4402dd6854ea",
-        //...
+        {
+            "_id": "603e53ea6a94d1071cb7b427",
+            "name": "Motion",
+            "iconURL": "/icons/Motion.PNG"
+        },
+        {
+            "_id": "603e53ea6a94d1071cb7b42d",
+            "name": "Color",
+            "iconURL": "/icons/Color.PNG"
+        },
+        ...
     ],
     "effects": [
-        "602d0e92771e4402dd685513",
-        "602d0e92771e4402dd685517",
-        "602d0e92771e4402dd68551e"
+        {
+            "_id": "603e53ea6a94d1071cb7b465",
+            "name": "Motion",
+            "iconURL": "/icons/Motion.PNG"
+        },
+        {
+            "_id": "603e53ea6a94d1071cb7b46c",
+            "name": "Appearing",
+            "iconURL": "/icons/Motion_Appearing.PNG"
+        },
+        ...
     ],
-    "_id": "60310098d77a41032a433b45",
-    "update_at": "2021-02-20T12:29:12.020Z",
-    "name": "mccollough_effect",
-    "content": "## Read this first\nIf you follow the instructions below, you will change your brain for a prolonged time (up to month), in addition to simply remembering this. Proceed only if this is ok with you.",
-    "title": "McCollough Effect",
+    "_id": "603e54ba4a5f860734fa3b45",
+    "title": "Stepping feet« illusion 1 – strong",
+    "gifFileName": "/gifs/“Stepping feet” Motion Illusion.gif",
+    "refURL": "https://michaelbach.de/ot/mot-feetLin/index.html",
+    "update_at": "2021-03-02T15:07:38.444Z",
     "__v": 0
 }
 ```
@@ -109,37 +126,43 @@ No need to send anything
 // Unpopulated
 [
     {
-        "_id": "602d0e92771e4402dd6854d3",
-        "name": "規律運動$regular"
+        "_id": "603e53ea6a94d1071cb7b467",
+        "name": "Translation",
+        "iconURL": "/icons/Motion_Variation_Translation.PNG"
     },
     {
-        "_id": "602d0e92771e4402dd6854e0",
-        "name": "彩度對比"
-    }, ...
+        "_id": "603e53ea6a94d1071cb7b474",
+        "name": "Brightness",
+        "iconURL": "/icons/Color_Variation_Brightness.PNG"
+    },
+    ...
 ]
 // Populated
 [
-    {
-        "subelements": [
-            {
-                "subelements": [],
-                "_id": "602d0e92771e4402dd6854e6",
-                "name": "低飽和"
-            },
-            {
-                "subelements": [],
-                "_id": "602d0e92771e4402dd6854e7",
-                "name": "亮度相同"
-            },
-            {
-                "subelements": [],
-                "_id": "602d0e92771e4402dd6854e8",
-                "name": "特定顏色"
-            }
-        ],
-        "_id": "602d0e92771e4402dd6854e5",
-        "name": "顏色限制"
-    }, ...
+  {
+    "subeffects": [
+        {
+            "subeffects": [
+                {
+                    "subeffects": [],
+                    "_id": "603e53ea6a94d1071cb7b46d",
+                    "level": 2,
+                    "name": "Translation",
+                    "iconURL": "/icons/Motion_Appearing_Translation.PNG"
+                },
+                ...
+            ],
+            "_id": "603e53ea6a94d1071cb7b46c",
+            "level": 1,
+            "name": "Appearing",
+            "iconURL": "/icons/Motion_Appearing.PNG"
+        }
+    ],
+    "_id": "603e53ea6a94d1071cb7b465",
+    "level": 0,
+    "name": "Motion",
+    "iconURL": "/icons/Motion.PNG"
+  }
 ]
 ```
 #### Description
@@ -148,7 +171,8 @@ If you want to retrieve tag hierarchy as well, set `populate=true`.
 
 ---
 
-### POST '/illusions/'
+### POST '/illusions/' (Work In Progress, DO NOT USE)
+#### Request
 #### Request
 ```
 Header:
@@ -180,8 +204,7 @@ Register a new illusion into database.
 
 ---
 
-### POST /illusions/search/\[elements|effects\] (Work In Progress, DO NOT USE)
-#### Request
+### POST /illusions/search/\[elements|effects\]
 ```
 Header:
     Content-Type: application/json

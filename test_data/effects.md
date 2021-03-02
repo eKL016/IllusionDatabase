@@ -12,10 +12,11 @@
         - Motion/Appearing/Shake
         - Motion/Appearing/Grouping
         - Motion/Appearing/Others
-- Color/Variation:
-    - Color/Variation/Brightness
-    - Color/Variation/Hue
-    - Color/Variation/Others
+- Color:
+    -  Variation:
+        - Color/Variation/Brightness
+        - Color/Variation/Hue
+        - Color/Variation/Others
 - Geometry:
     - Geometry/Variation:
         - Geometry/Variation/Shape
