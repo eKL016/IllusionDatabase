@@ -5,30 +5,14 @@
     - Motion/Rotation
     - Motion/Flickering
     - Motion/Others
-- Gaze:
-    - Gaze/Focus
-    - Gaze/Saccade 
-    - Gaze/Peripheral
 - Color:
     - Color/High contrast:
         - Color/High contrast/Brightness
         - Color/High contrast/Hue
         - Color/High contrast/Others
-    - Color/Gradient 
+    - Color/Gradient
     - Color/Chromatic transition
     - Color/Others
-- Relation:
-    - Relation/Periphery and center
-    - Relation/Parallel
-    - Relation/Perpendicular
-    - Relation/Similar
-    - Relation/Identical
-    - Relation/Duality & Multiple explanation
-    - Relation/Others
-- Lighting:
-    - Lighting/Shadow
-    - Lighting/Source
-    - Lighting/Others
 - Pattern:
     - Pattern/Stripe
     - Pattern/Grid
@@ -43,6 +27,22 @@
     - Shape/Incompletion
     - Shape/Scale
     - Shape/Others
+- Gaze:
+    - Gaze/Focus
+    - Gaze/Saccade 
+    - Gaze/Peripheral
+- Relation:
+    - Relation/Periphery and center
+    - Relation/Parallel
+    - Relation/Perpendicular
+    - Relation/Similar
+    - Relation/Identical
+    - Relation/Duality & Multiple explanation
+    - Relation/Others
+- Lighting:
+    - Lighting/Shadow
+    - Lighting/Source
+    - Lighting/Others
 - Filter:
     - Filter/Blur
     - Filter/Mosaic
@@ -53,7 +53,9 @@
     - Perspective & Anamorphosis/2D and 3D
 - Action:
     - Action/Round robin
-    - Action/Reorder
+    - Action/Appearing
+    - Action/Disappearing
+    - Action/Reordering
 - Layers
 - Obstacle & Occluder
 - Text

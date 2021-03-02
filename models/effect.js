@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const effectSchema = new mongoose.Schema({
   name: String,
+  iconURL: String,
   level: Number,
   subeffects: [mongoose.ObjectId],
 });

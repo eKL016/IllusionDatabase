@@ -7,13 +7,10 @@ npm install --global yarn
 # 2. Install dependencies
 yarn install
 
-# 3. Import database from backup
-cd test_data
-unzip dbBackup.zip
-mongorestore  ./dbBackup/
-
-# Or initialize a new database (name: test)
+# 3. Initialize a new database (name: test)
+cd ./test_data
 node initDB.js
+python3 ./importIllusions.py
 
 # 4. Start app
 node app.js
@@ -22,9 +19,9 @@ node app.js
 * GET
     * [/illusions?extend=[true|false]](#GET-illusionsextendtruefalse)
     * [/illusions/:id](#GET-illusionsid)
-    * [/tags/[categories|effects]?populate=[true|false]](#GET-tagscategorieseffectspopulatetruefalse)
+    * [/tags/[elements|effects]?populate=[true|false]](#GET-tagselementseffectspopulatetruefalse)
 * POST
-    * [/illusions/search/\[categories|effects\]](#POST-illusionssearchcategorieseffects)
+    * [/illusions/search/\[elements|effects\]](#POST-illusionssearchelementsffects)
     * [/illusions/:name](#POST-illusionsname)
 ### GET /illusions?extend=\[true|false\]
 #### Request
@@ -44,7 +41,7 @@ No need to send anything
 // Extended
 [
     {
-        "categories": [
+        "elements": [
             "602d0e92771e4402dd6854d8",
             "602d0e92771e4402dd6854dd",
             "602d0e92771e4402dd6854ea",
@@ -74,21 +71,12 @@ Get all illusions.
 ### GET /illusions/:id
 #### Request
 ```
-Header:
-
-Body:
-{
-  "tags": [
-    "602d0e92771e4402dd685536&602d0e92771e4402dd68551f",
-    "602d0e92771e4402dd68553f&602d0e92771e4402dd685520",
-    "602d0e92771e4402dd685528&602d0e92771e4402dd685529"
-  ]
-}
+No need to send anything
 ```
 #### Response
 ```javascript=
 {
-    "categories": [
+    "elements": [
         "602d0e92771e4402dd6854d8",
         "602d0e92771e4402dd6854dd",
         "602d0e92771e4402dd6854ea",
@@ -111,7 +99,7 @@ Body:
 Get a certain illusion by UID
 
 ---
-### GET /tags/\[categories|effects\]?populate=\[true|false\]
+### GET /tags/\[elements|effects\]?populate=\[true|false\]
 #### Request
 ```
 No need to send anything
@@ -132,19 +120,19 @@ No need to send anything
 // Populated
 [
     {
-        "subcategories": [
+        "subelements": [
             {
-                "subcategories": [],
+                "subelements": [],
                 "_id": "602d0e92771e4402dd6854e6",
                 "name": "低飽和"
             },
             {
-                "subcategories": [],
+                "subelements": [],
                 "_id": "602d0e92771e4402dd6854e7",
                 "name": "亮度相同"
             },
             {
-                "subcategories": [],
+                "subelements": [],
                 "_id": "602d0e92771e4402dd6854e8",
                 "name": "特定顏色"
             }
@@ -155,12 +143,12 @@ No need to send anything
 ]
 ```
 #### Description
-Get all tags (categories OR effects).
+Get all tags (elements OR effects).
 If you want to retrieve tag hierarchy as well, set `populate=true`.
 
 ---
 
-### POST '/illusions/:name'
+### POST '/illusions/'
 #### Request
 ```
 Header:
@@ -168,7 +156,7 @@ Header:
 Body:
     {
       "title": "Moire Patterns",
-      "categories": [
+      "elements": [
         "602d0e92771e4402dd6854d2&602d0e92771e4402dd6854d8&602d0e92771e4402dd6854ea&602d0e92771e4402dd6854f3&602d0e92771e4402dd685501",
         "602d0e92771e4402dd6854fe&602d0e92771e4402dd6854db&602d0e92771e4402dd6854f4&602d0e92771e4402dd685505&602d0e92771e4402dd685508"
       ],
@@ -177,7 +165,9 @@ Body:
         "602d0e92771e4402dd68552c",
         "602d0e92771e4402dd685534"
       ],
-      "content": "MARKDOWN CONTENT GOES HERE, BUT YOU NEED TO REPLACE ALL LINEBREAKS WITH /n"
+      "gifFileName": "FILE NAME OF GIF",
+      "refURL": "URL TO THE REFERENCE",
+      "summary": "MARKDOWN CONTENT GOES HERE, BUT YOU NEED TO REPLACE ALL LINEBREAKS WITH /n"
     }
 ```
 #### Response
@@ -190,7 +180,7 @@ Register a new illusion into database.
 
 ---
 
-### POST /illusions/search/\[categories|effects\]
+### POST /illusions/search/\[elements|effects\]
 #### Request
 ```
 Header:

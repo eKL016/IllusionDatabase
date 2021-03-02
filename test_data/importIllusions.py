@@ -3,7 +3,7 @@ import pandas as pd
 import os
 import requests
 
-with open('illusionTable-new.tsv', 'r', encoding='utf-8-sig') as f:
+with open('illusionTable.tsv', 'r', encoding='utf-8-sig') as f:
   raw_df = pd.read_csv(f, sep='\t')
   raw_df['element'] = raw_df[raw_df.columns[2:11]].apply(
     lambda x: '|'.join(x.dropna().astype(str)),

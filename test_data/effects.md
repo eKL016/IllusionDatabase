@@ -1,28 +1,4 @@
 ---
-- Color/Variation:
-    - Color/Variation/Brightness 
-    - Color/Variation/Hue
-    - Color/Variation/Others
-    - Color/Variation/Saturation
-- Geometry:
-    - Geometry/Variation:
-        - Geometry/Variation/Straight line & Rectangle
-        - Geometry/Variation/Angle
-        - Geometry/Variation/Size
-        - Geometry/Variation/Embossing & Engraving
-        - Geometry/Variation/Completeness
-        - Geometry/Variation/Impossible object
-        - Geometry/Variation/Shape
-    - Geometry/Appearing:
-        - Geometry/Appearing/Shape
-        - Geometry/Appearing/Straight line & Rectangle
-        - Geometry/Appearing/Embossing & Engraving
-        - Geometry/Appearing/Dot
-    - Geometry/Disappearing:
-        - Geometry/Disappearing/Shape
-        - Geometry/Disappearing/Straight line & Rectangle
-        - Geometry/Disappearing/Dot
-        
 - Motion:
     - Motion/Variation:
         - Motion/Variation/Translation
@@ -36,6 +12,28 @@
         - Motion/Appearing/Shake
         - Motion/Appearing/Grouping
         - Motion/Appearing/Others
+- Color/Variation:
+    - Color/Variation/Brightness
+    - Color/Variation/Hue
+    - Color/Variation/Others
+- Geometry:
+    - Geometry/Variation:
+        - Geometry/Variation/Shape
+        - Geometry/Variation/Straight line & Rectangle
+        - Geometry/Variation/Angle
+        - Geometry/Variation/Size
+        - Geometry/Variation/Embossing & Engraving & Depth
+        - Geometry/Variation/Completeness
+        - Geometry/Variation/Impossible object
+    - Geometry/Appearing:
+        - Geometry/Appearing/Shape
+        - Geometry/Appearing/Straight line & Rectangle
+        - Geometry/Appearing/Embossing & Engraving & Depth
+        - Geometry/Appearing/Dot
+    - Geometry/Disappearing:
+        - Geometry/Disappearing/Shape
+        - Geometry/Disappearing/Straight line & Rectangle
+        - Geometry/Disappearing/Dot
 - Quantity variation
 - 2D ↔ 3D
 - Duality & Multiple explanation
