@@ -7,11 +7,11 @@ const TagModels = {
 };
 const AllowedTagType = ['elements', 'effects'];
 
-const getPopulatedTags = async (type='') => {
+const getPopulatedTags = async (type='', getTopTagsOnly=false) => {
   const subTagName = `sub${type}`;
   const selectedColumns = `name _id ${subTagName} level iconURL`;
   return await TagModels[type].model
-      .find({level: 0}, selectedColumns)
+      .find( getTopTagsOnly?{level: 0}:{}, selectedColumns)
       .populate({
         path: subTagName,
         populate: {
@@ -66,7 +66,7 @@ module.exports = {
         throw new EvalError('Invalid Tag Type');
       }
       if (ctx.query.populate === 'true') {
-        res = await getPopulatedTags(type);
+        res = await getPopulatedTags(type, getTopTagsOnly=true);
       } else {
         res = await TagModels[type].model.find({}, 'name _id iconURL').exec();
       }
