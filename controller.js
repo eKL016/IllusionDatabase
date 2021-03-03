@@ -153,6 +153,7 @@ module.exports = {
       newIllusion.title = entry.title;
       newIllusion.gifFileName = entry['GIF檔名'];
       newIllusion.refURL = entry['URLs'];
+      newIllusion.summary = entry.summary;
       try {
         newIllusion.effects = effectFinder(entry.effect);
         newIllusion.elements = elementFinder(entry.element);
