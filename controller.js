@@ -11,7 +11,7 @@ const getPopulatedTags = async (type='') => {
   const subTagName = `sub${type}`;
   const selectedColumns = `name _id ${subTagName} level iconURL`;
   return await TagModels[type].model
-      .find({}, selectedColumns)
+      .find({level: 0}, selectedColumns)
       .populate({
         path: subTagName,
         populate: {
