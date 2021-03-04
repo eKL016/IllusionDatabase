@@ -16,7 +16,7 @@ db.once('open', function() {
 });
 
 const app = new Koa();
-app.use(koaBody({multipart: true, includeUnparsed: true}));
+app.use(koaBody({multipart: true, includeUnparsed: true, textLimit: '10mb'}));
 app.use(logger());
 app.use(async (ctx, next) => {
   try {
