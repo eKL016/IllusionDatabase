@@ -99,7 +99,10 @@ module.exports = {
   },
   getAllEntry: async (ctx, next) => {
     if (ctx.query.extend === 'true') {
-      return await IllusionModel.model.find().exec();
+      return await IllusionModel.model.find()
+          .populate('effects', 'name _id iconURL')
+          .populate('elements', 'name _id iconURL')
+          .exec();
     } else {
       return await IllusionModel.model.find({}, '_id title').exec();
     }
